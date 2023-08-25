@@ -4,14 +4,12 @@ import { CharacterTable } from "./CharacterTable";
 import { queryKeys } from "../../../api/api";
 
 export function CharactersPage() {
-  const {data, isLoading} = useCharactersDataSource();
+  const { data, isLoading } = useCharactersDataSource();
 
   return (
     <Box>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
-      {!isLoading &&
-        <CharacterTable characters={data || []} />
-      }
+      {!isLoading && <CharacterTable characters={data || []} />}
     </Box>
   );
 }
