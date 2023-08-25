@@ -1,21 +1,16 @@
-import { Flex, LoadingOverlay } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { Flex } from "@mantine/core";
 import { CharacterCard } from "./CharacterCard";
-import { queryKeys } from "../../../api/api";
+import { Character } from "../../../api/api";
 
-export function CharacterList() {
-  const { isLoading, error, data } = useQuery(queryKeys.characters.list([]));
-
-  if (error) return <>`An error has occurred: ${error.message}`</>;
+export function CharacterList({ characters }: {
+  characters: Character[],
+}) {
 
   return (
-    <>
-      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Flex gap="md" direction="row" wrap="wrap">
-        {data?.map((character) => (
+        {characters.map((character) => (
           <CharacterCard key={character.id} character={character} />
         ))}
       </Flex>
-    </>
   );
 }
