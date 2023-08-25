@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useEvent } from "../../../utils/useEvent";
 
 export function CharactersPage() {
-  const { data, totalPages, currPage, isLoading, gotoPage } = useCharactersDataSource();
+  const { data, totalPages, currPage, isLoading, isPreviousData, gotoPage } = useCharactersDataSource();
 
   return (
     <Box>
-      <LoadingOverlay visible={isLoading} overlayBlur={2} />
+      <LoadingOverlay visible={isLoading || isPreviousData} overlayBlur={2} />
       {!isLoading && <CharacterTable 
         characters={data || []} 
         totalPages={totalPages} 
@@ -25,9 +25,12 @@ export function CharactersPage() {
 function useCharactersDataSource() {
   const [currPage, setCurrPage] = useState(0);
 
-  const { isLoading, error, data } = useQuery(queryKeys.characters.list({
-    page: currPage,
-  }));
+  const { isLoading, isPreviousData, error, data } = useQuery({
+    ...queryKeys.characters.list({
+      page: currPage,
+    }),
+    keepPreviousData: true,
+  });
 
   const {
     results,
@@ -53,6 +56,7 @@ function useCharactersDataSource() {
 
   return {
     isLoading,
+    isPreviousData,
     error,
     totalPages: pages,
     count,
