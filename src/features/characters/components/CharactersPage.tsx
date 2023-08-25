@@ -3,7 +3,8 @@ import * as R from "ramda";
 import { Box, LoadingOverlay } from "@mantine/core";
 import { CharacterTable } from "./CharacterTable";
 import { queryKeys } from "../../../api/api";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useEvent } from "../../../utils/useEvent";
 
 export function CharactersPage() {
   const { data, totalPages, currPage, isLoading, gotoPage } = useCharactersDataSource();
@@ -63,15 +64,3 @@ function useCharactersDataSource() {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function useEvent<T>(callback: (...args: any[]) => T) {
-  const inner = useRef(callback);
-  inner.current = callback;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const outer = useRef((...args: any[]): T => {
-    return inner.current(...args);
-  })
-
-  return outer.current;
-}

@@ -71,6 +71,7 @@ export function CharacterTable({
       </Table>
 
       <Pagination value={activePage} onChange={onPaginationChange} total={totalPages} />
+
     </Box>
   );
 }
