@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useEvent } from "../../../utils/useEvent";
 
 export function CharactersPage() {
-  const { data, totalPages, currPage, isLoading, isPreviousData, gotoPage } = useCharactersDataSource();
+  const { data, totalPages, totalCount, currPage, isLoading, isPreviousData, gotoPage } = useCharactersDataSource();
 
   return (
     <Box>
@@ -15,6 +15,7 @@ export function CharactersPage() {
       {!isLoading && <CharacterTable 
         characters={data || []} 
         totalPages={totalPages} 
+        totalCount={totalCount}
         activePage={currPage}
         onPaginationChange={gotoPage}
       />}
@@ -59,6 +60,7 @@ function useCharactersDataSource() {
     isPreviousData,
     error,
     totalPages: pages,
+    totalCount: count,
     count,
     data: results,
     currPage,
