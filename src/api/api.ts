@@ -50,13 +50,15 @@ export interface CharacterResponse {
 
 const api = {
   getCharacters: ({ page }: { page: number }) =>
-    fetch(`https://rickandmortyapi.com/api/character?page=${page}`).then((resp) => {
-      if (!resp.ok) {
-        throw new Error(resp.statusText);
-      }
+    fetch(`https://rickandmortyapi.com/api/character?page=${page}`).then(
+      (resp) => {
+        if (!resp.ok) {
+          throw new Error(resp.statusText);
+        }
 
-      return resp.json() as Promise<CharacterResponse>;
-    }),
+        return resp.json() as Promise<CharacterResponse>;
+      },
+    ),
   getLocations: () => fetch("https://rickandmortyapi.com/api/location"),
   getEpisodes: () => fetch("https://rickandmortyapi.com/api/episode"),
 };

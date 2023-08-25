@@ -7,18 +7,28 @@ import { useState } from "react";
 import { useEvent } from "../../../utils/useEvent";
 
 export function CharactersPage() {
-  const { data, totalPages, totalCount, currPage, isLoading, isPreviousData, gotoPage } = useCharactersDataSource();
+  const {
+    data,
+    totalPages,
+    totalCount,
+    currPage,
+    isLoading,
+    isPreviousData,
+    gotoPage,
+  } = useCharactersDataSource();
 
   return (
     <Box>
       <LoadingOverlay visible={isLoading || isPreviousData} overlayBlur={2} />
-      {!isLoading && <CharacterTable 
-        characters={data || []} 
-        totalPages={totalPages} 
-        totalCount={totalCount}
-        activePage={currPage}
-        onPaginationChange={gotoPage}
-      />}
+      {!isLoading && (
+        <CharacterTable
+          characters={data || []}
+          totalPages={totalPages}
+          totalCount={totalCount}
+          activePage={currPage}
+          onPaginationChange={gotoPage}
+        />
+      )}
     </Box>
   );
 }
@@ -69,4 +79,3 @@ function useCharactersDataSource() {
     gotoPage,
   };
 }
-

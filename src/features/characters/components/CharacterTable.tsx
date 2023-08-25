@@ -1,4 +1,12 @@
-import { Table, Image, Box, Anchor, Stack, Pagination, Group } from "@mantine/core";
+import {
+  Table,
+  Image,
+  Box,
+  Anchor,
+  Stack,
+  Pagination,
+  Group,
+} from "@mantine/core";
 import { Character } from "../../../api/api";
 import { useMemo } from "react";
 
@@ -73,10 +81,13 @@ export function CharacterTable({
       </Table>
 
       <Group>
-      <Pagination value={activePage} onChange={onPaginationChange} total={totalPages} />
+        <Pagination
+          value={activePage}
+          onChange={onPaginationChange}
+          total={totalPages}
+        />
         <Box>{totalCount}</Box>
-        </Group>
-
+      </Group>
     </Box>
   );
 }
