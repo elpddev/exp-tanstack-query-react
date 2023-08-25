@@ -49,8 +49,8 @@ export interface CharacterResponse {
 }
 
 const api = {
-  getCharacters: () =>
-    fetch("https://rickandmortyapi.com/api/character").then((resp) => {
+  getCharacters: ({ page }: { page: number }) =>
+    fetch(`https://rickandmortyapi.com/api/character?page=${page}`).then((resp) => {
       if (!resp.ok) {
         throw new Error(resp.statusText);
       }
@@ -63,12 +63,9 @@ const api = {
 
 export const charactersKeys = createQueryKeys("characters", {
   detail: null,
-  list: (filters: []) => ({
+  list: (filters: { page: number }) => ({
     queryKey: [{ filters }],
-    queryFn: async () => {
-      const resp = await api.getCharacters();
-      return resp.results;
-    },
+    queryFn: () => api.getCharacters({ page: filters.page }),
   }),
 });
 

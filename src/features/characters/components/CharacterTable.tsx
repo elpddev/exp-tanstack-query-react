@@ -1,4 +1,4 @@
-import { Table, Image, Box, Anchor, Stack } from "@mantine/core";
+import { Table, Image, Box, Anchor, Stack, Pagination } from "@mantine/core";
 import { Character } from "../../../api/api";
 import { useMemo } from "react";
 
@@ -42,22 +42,36 @@ const headers = [
   },
 ];
 
-export function CharacterTable({ characters }: { characters: Character[] }) {
+export function CharacterTable({
+  characters,
+  activePage,
+  totalPages,
+  onPaginationChange,
+}: {
+  characters: Character[];
+  activePage: number;
+  totalPages: number;
+  onPaginationChange: (pageNum: number) => void;
+}) {
   return (
-    <Table>
-      <thead>
-        <tr>
-          {headers.map((header, index) => (
-            <TableHeader key={index} header={header} />
+    <Box>
+      <Table>
+        <thead>
+          <tr>
+            {headers.map((header, index) => (
+              <TableHeader key={index} header={header} />
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {characters.map((character) => (
+            <CharacterRow key={character.id} character={character} />
           ))}
-        </tr>
-      </thead>
-      <tbody>
-        {characters.map((character) => (
-          <CharacterRow key={character.id} character={character} />
-        ))}
-      </tbody>
-    </Table>
+        </tbody>
+      </Table>
+
+      <Pagination value={activePage} onChange={onPaginationChange} total={totalPages} />
+    </Box>
   );
 }
 
@@ -78,7 +92,7 @@ function CharacterRow({ character }: { character: Character }) {
       <td>{character.location.name}</td>
       <td>
         <Image
-          maw={240}
+          maw={24}
           mx="auto"
           radius="md"
           src={character.image}
@@ -86,16 +100,14 @@ function CharacterRow({ character }: { character: Character }) {
         />
       </td>
       <td>
-          <EpisodeListBox episodes={character.episode} />
+        <EpisodeListBox episodes={character.episode} />
       </td>
       <td>{character.created}</td>
     </tr>
   );
 }
 
-const episodePattern = new RegExp(
-  "episode\\/(\\d+)",
-);
+const episodePattern = new RegExp("episode\\/(\\d+)");
 
 function EpisodeBox({ episode }: { episode: string }) {
   const id = useMemo(() => {
@@ -110,17 +122,14 @@ function EpisodeBox({ episode }: { episode: string }) {
   );
 }
 
-function EpisodeListBox({ episodes}: {
-  episodes: string[]
-}) {
-
+function EpisodeListBox({ episodes }: { episodes: string[] }) {
   return (
-    <Box sx={{ height: '120px', overflow: "auto"}}>
-    <Stack>
-          {episodes.map((episode, index) => (
-            <EpisodeBox key={index} episode={episode} />
-          ))}
-    </Stack>
+    <Box sx={{ height: "24px", overflow: "auto" }}>
+      <Stack>
+        {episodes.map((episode, index) => (
+          <EpisodeBox key={index} episode={episode} />
+        ))}
+      </Stack>
     </Box>
-  )
+  );
 }
