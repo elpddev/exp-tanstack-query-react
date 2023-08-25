@@ -1,4 +1,4 @@
-import { Table } from "@mantine/core";
+import { Table, Image } from "@mantine/core";
 import { Character } from "../../../api/api";
 
 interface ITableHheader {
@@ -72,7 +72,9 @@ function CharacterRow({ character }: {
     <td>{character.gender}</td>
     <td>{character.origin.name}</td>
     <td>{character.location.name}</td>
-    <td>{character.image}</td>
+    <td>
+          <Image maw={240} mx="auto" radius="md" src={character.image} alt="image" />
+    </td>
     <td>{character.episode.toString()}</td>
     <td>{character.created}</td>
   </tr>);
