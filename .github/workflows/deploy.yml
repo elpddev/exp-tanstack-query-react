@@ -37,7 +37,8 @@ jobs:
 
       - run: pnpm build
 
-      - name: Upload artifact
+      # Packaging and uploading an artifact that can be deployed to GitHub Pages
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./dist
